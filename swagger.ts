@@ -1,3 +1,4 @@
+import { Customer } from './src/models/Customer';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
