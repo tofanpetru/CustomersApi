@@ -1,19 +1,18 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { Request, Response, NextFunction } from 'express';
 import { swaggerSpec } from './swagger';
 import bodyParser from 'body-parser';
 import customerRoutes from './src/routes/customerRoutes';
+import { AddDependencyService } from './src/IoC/AddDependencyService';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
+const addDependencyService = new AddDependencyService(app);
+
+addDependencyService.RegisterMiddlewareFromDirectory('./src/middlewares');
 
 app.use('/customers', customerRoutes);
 
