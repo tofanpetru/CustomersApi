@@ -1,18 +1,16 @@
 import express, { Request, Response } from 'express';
 import { Customer } from '../models/Customer';
 import { getCustomers, addCustomer } from '../infrastructure/dbContext';
-import { RequestValidationMiddleware } from '../middlewares/RequestValidationMiddleware';
+import { CreateCustomerRequestValidator } from '../validation/CreateCustomerRequestValidator';
 
 const router = express.Router();
-
-const requiredCustomerProps = ['name', 'email'];
 
 router.get('/', (req: Request, res: Response) => {
     const customers = getCustomers();
     res.json(customers);
 });
 
-router.post('/', RequestValidationMiddleware(requiredCustomerProps), (req: Request, res: Response) => {
+router.post('/', CreateCustomerRequestValidator, (req: Request, res: Response) => {
     try {
         const newCustomer: Customer = req.body;
         const addedCustomer = addCustomer(newCustomer);

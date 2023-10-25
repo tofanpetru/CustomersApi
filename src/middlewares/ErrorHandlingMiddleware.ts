@@ -5,6 +5,6 @@ export function ErrorHandlingMiddleware(
     req: Request,
     res: Response,
     next: NextFunction) {
-    console.error(`Error: ${error.message}`);
+    console.error(`[${new Date().toISOString()}] Error: ${error.message}`);
     res.status(500).json({ error: 'Internal Server Error' });
 }
