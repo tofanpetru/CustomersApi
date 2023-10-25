@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { Request, Response, NextFunction } from 'express';
-import { swaggerSpec } from './swagger'; // Import the swaggerSpec from your swagger.ts file
+import { swaggerSpec } from './swagger';
 import bodyParser from 'body-parser';
 import customerRoutes from './src/routes/customerRoutes';
 
