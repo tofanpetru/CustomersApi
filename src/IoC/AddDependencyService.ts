@@ -1,25 +1,13 @@
 import { Express } from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
+import { ErrorHandlingMiddleware } from '../middlewares/ErrorHandlingMiddleware';
+import { LoggingMiddleware } from '../middlewares/LoggingMiddleware';
 
-export class AddDependencyService {
-  private app: Express;
+export function registerCustomMiddleware(app: Express): void {
+    const customMiddlewares = [ErrorHandlingMiddleware, LoggingMiddleware];
 
-  constructor(app: Express) {
-    this.app = app;
-  }
-
-  public RegisterMiddlewareFromDirectory(middlewareDirectory: string) {
-    const middlewareFiles = fs.readdirSync(middlewareDirectory);
-
-    middlewareFiles.forEach((file) => {
-      const middlewarePath = path.join(middlewareDirectory, file);
-      const middleware = require(middlewarePath);
-
-      if (typeof middleware === 'function') {
-        this.app.use(middleware);
-        console.log(`Middleware registered from: ${middlewarePath}`);
-      }
+    customMiddlewares.forEach((middleware) => {
+        app.use(middleware);
     });
-  }
+
+    console.log('Custom middleware registered: ', customMiddlewares);
 }
