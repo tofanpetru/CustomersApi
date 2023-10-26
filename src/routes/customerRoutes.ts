@@ -68,9 +68,9 @@ router.post('/', CreateCustomerRequestValidator, (req: Request, res: Response) =
         const addedCustomer = addCustomer(newCustomer);
 
         res.status(201).json(addedCustomer);
-    } catch (error) {
-        res.status(500).json({ error: 'Could not create customer' });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
     }
-});
+});//todo sa prinzi o exceptie custom, sa ie adaugat in middleware. sa se foloseasca statuscodes in loc de hartcodari
 
 export default router;
