@@ -2,6 +2,9 @@ import { body } from "express-validator";
 import { CreateCustomValidator } from "./CreateCustomValidator";
 
 export const CreateCustomerRequestValidator = CreateCustomValidator([
+  body('id')
+    .notEmpty()
+    .withMessage("'id' must not be empty."),
   body('name')
     .notEmpty()
     .withMessage("'Full Name' must not be empty."),
