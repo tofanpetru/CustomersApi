@@ -26,20 +26,18 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: A list of customers with pagination info.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/PaginatedCustomerResponse'
  */
 router.get('/', (req: Request, res: Response) => {
     const customers = getCustomers();
     const { page, perPage } = req.query;
 
     const paginationService = new PaginationService<Customer>(customers);
-    const pageInt = parseInt(page as string) || 1;
-    const perPageInt = parseInt(perPage as string) || 10;
 
-    const paginatedData = paginationService.paginate(pageInt, perPageInt);
+    const paginatedData = paginationService.paginate({
+        page: parseInt(page as string) || 1,
+        perPage: parseInt(perPage as string) || 10,
+        controllerName: 'customers',
+    });
 
     res.json(paginatedData);
 });

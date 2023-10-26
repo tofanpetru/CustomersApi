@@ -9,7 +9,7 @@ export const getCustomers = (): Customer[] => {
 
 export const addCustomer = (customer: Customer): Customer => {
   const existingCustomer = db.find((c) => c.email === customer.email);
-
+//add valdiation for id, name.
   if (existingCustomer) {
     throw new Error('Customer with the same email already exists');
   }
