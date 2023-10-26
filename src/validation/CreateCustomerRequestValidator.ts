@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body } from "express-validator";
+import { CreateCustomValidator } from "./CreateCustomValidator";
 
-export const CreateCustomerRequestValidator = [
+export const CreateCustomerRequestValidator = CreateCustomValidator([
   body('name')
     .notEmpty()
     .withMessage("'Full Name' must not be empty."),
@@ -10,12 +10,4 @@ export const CreateCustomerRequestValidator = [
     .withMessage("'Email' must not be empty.")
     .isEmail()
     .withMessage("'Email' must be a valid email address."),
-  (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const errorMessages = errors.array().map(error => error.msg);
-      return res.status(400).json({ errors: errorMessages });
-    }
-    next();
-  },
-];
+]);
