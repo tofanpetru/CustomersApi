@@ -1,4 +1,5 @@
 import { Customer } from "../models/Customer";
+import { faker } from '@faker-js/faker';
 
 const db: Customer[] = [];
 
@@ -11,19 +12,14 @@ export const addCustomer = (customer: Customer): Customer => {
   return customer;
 }
 
-export const seedDatabase = (): void => {
-    const customer1: Customer = {
-      id: 1,
-      name: 'Customer 1',
-      email: 'customer1@example.com',
+export const seedDatabase = (numberOfEntries: number): void => {
+  for (let i = 1; i <= numberOfEntries; i++) {
+    const customer: Customer = {
+      id: i,
+      name: faker.person.fullName(), 
+      email: faker.internet.email(),
     };
-  
-    const customer2: Customer = {
-      id: 2,
-      name: 'Customer 2',
-      email: 'customer2@example.com',
-    };
-  
-    addCustomer(customer1);
-    addCustomer(customer2);
+
+    addCustomer(customer);
   }
+}

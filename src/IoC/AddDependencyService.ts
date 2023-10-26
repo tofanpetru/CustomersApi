@@ -25,7 +25,7 @@ function registerCustomMiddleware(app: Express): void {
 
 function registerServices(app: Express): void {
     app.use(bodyParser.json());
-    seedDatabase();
+    seedDatabase(100);
 }
 
 function registerRoutes(app: Express): void {
