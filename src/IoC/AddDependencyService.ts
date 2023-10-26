@@ -8,8 +8,8 @@ import customerRoutes from '../../src/routes/customerRoutes';
 import bodyParser from 'body-parser';
 
 export function registerDependencies(app: Express): void {
-    registerServices(app);
     registerCustomMiddleware(app);
+    registerServices(app);
     registerRoutes(app);
 }
 
@@ -25,6 +25,7 @@ function registerCustomMiddleware(app: Express): void {
 
 function registerServices(app: Express): void {
     app.use(bodyParser.json());
+
     seedDatabase(100);
 }
 
