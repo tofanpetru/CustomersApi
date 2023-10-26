@@ -10,24 +10,39 @@ const router = express.Router();
  * @swagger
  * /customers:
  *   get:
- *     summary: Get a list of customers
- *     description: Retrieve a list of all customers.
+ *     summary: Get a list of customers with pagination
+ *     description: Retrieve a list of customers with optional pagination.
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: The page number for pagination.
+ *       - in: query
+ *         name: perPage
+ *         schema:
+ *           type: integer
+ *         description: The number of items to display per page.
  *     responses:
  *       200:
- *         description: A list of customers
+ *         description: A list of customers with pagination info.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PaginatedCustomerResponse'
  */
 router.get('/', (req: Request, res: Response) => {
     const customers = getCustomers();
     const { page, perPage } = req.query;
-  
+
     const paginationService = new PaginationService<Customer>(customers);
     const pageInt = parseInt(page as string) || 1;
     const perPageInt = parseInt(perPage as string) || 10;
-  
+
     const paginatedData = paginationService.paginate(pageInt, perPageInt);
-  
+
     res.json(paginatedData);
-  });  
+});
 
 /**
  * @swagger
