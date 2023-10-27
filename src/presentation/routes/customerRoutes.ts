@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import { Customer } from '../models/Customer';
-import { getCustomers, addCustomer, updateCustomer, getCustomerById } from '../infrastructure/dbContext';
+import { Customer } from '../../repository/persistence/Customer';
+import { getCustomers, addCustomer, updateCustomer, getCustomerById } from '../../repository/dbContext';
 import { CreateCustomerRequestValidator } from '../validation/CreateCustomerRequestValidator';
-import { PaginationService } from '../services/PaginationService';
+import { PaginationService } from '../../application/services/PaginationService';
 
 const router = express.Router();
 

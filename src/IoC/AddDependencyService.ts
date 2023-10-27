@@ -1,10 +1,10 @@
 import { Express } from 'express';
-import { ErrorHandlingMiddleware } from '../middlewares/ErrorHandlingMiddleware';
-import { LoggingMiddleware } from '../middlewares/LoggingMiddleware';
-import { seedDatabase } from '../infrastructure/dbContext';
+import { ErrorHandlingMiddleware } from '../presentation/routes/middlewares/ErrorHandlingMiddleware';
+import { LoggingMiddleware } from '../presentation/routes/middlewares/LoggingMiddleware';
+import { seedDatabase } from '../repository/dbContext';
 import { swaggerSpec } from '../../swagger';
 import swaggerUi from 'swagger-ui-express';
-import customerRoutes from '../../src/routes/customerRoutes';
+import customerRoutes from '../presentation/routes/customerRoutes';
 import bodyParser from 'body-parser';
 
 export function registerDependencies(app: Express): void {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { ConsoleService } from './src/services/ConsoleService';
+import { ConsoleService } from './src/application/services/ConsoleService';
 import { registerDependencies } from './src/IoC/AddDependencyService';
 
 const port = process.env.PORT || 3000;

@@ -1,4 +1,4 @@
-import { Customer } from "../models/Customer";
+import { Customer } from "./persistence/Customer";
 import { faker } from '@faker-js/faker';
 
 const db: Customer[] = [];

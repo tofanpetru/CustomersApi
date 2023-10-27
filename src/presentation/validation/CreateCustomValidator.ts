@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { body, validationResult, ValidationChain } from 'express-validator';
+import { validationResult, ValidationChain } from 'express-validator';
 
 
 export const CreateCustomValidator = (validationRules: ValidationChain[]) => {

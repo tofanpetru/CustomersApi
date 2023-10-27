@@ -1,4 +1,4 @@
-import { Customer } from './src/models/Customer';
+import { Customer } from './src/repository/persistence/Customer';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
