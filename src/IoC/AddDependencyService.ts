@@ -1,15 +1,15 @@
 import { Express } from 'express';
 import { LoggingMiddleware } from '../presentation/middlewares/LoggingMiddleware';
-import { swaggerSpec } from '../presentation/swagger';
 import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
-import { CustomerRoutes } from '../presentation/routes/customerRoutes';
+import { CustomerRoutes } from '../presentation/routes/v1/customerRoutes';
 import { DbContext } from '../repository/dbContext';
 import { Customer } from '../repository/persistence/Customer';
 import CustomerRepository from '../repository/repository/implementations/customerRepository';
 import ErrorHandlingMiddleware from '../presentation/middlewares/ErrorHandlingMiddleware';
 import { DefaultRoute } from '../presentation/routes/defaultRoute';
-import { CustomerRoutesV2 } from '../presentation/routes/CustomerRoutesV2';
+import { CustomerRoutesV2 } from '../presentation/routes/v2/customerRoutesV2';
+import { combinedSwaggerSpec } from '../presentation/swagger';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -39,8 +39,9 @@ export function registerRoutes(app: Express): void {
     const customerRoutesV2 = new CustomerRoutesV2(customerRepository);
     const defaultRoute = new DefaultRoute();
 
-    app.use('/customers', customerRoutes.registerRoutes());
+    app.use('/v1/customers', customerRoutes.registerRoutes());
     app.use('/v2/customers', customerRoutesV2.registerRoutes());
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(combinedSwaggerSpec));
+    app.use('/api-docs/v2', swaggerUi.serve, swaggerUi.setup(combinedSwaggerSpec))
     app.get('/', defaultRoute.registerRoute());
 }
