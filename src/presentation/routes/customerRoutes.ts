@@ -119,6 +119,12 @@ export class CustomerRoutes {
          *           $ref: '#/components/schemas/Customer'
          *       400:
          *         description: Bad request
+         *       422:
+         *         description: Unprocessable Entity
+         *         content:
+         *           application/json:
+         *             example:
+         *               errors: ["'Name' must not be empty.", "'Email' must be a valid email address."]
          */
         router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
             try {
