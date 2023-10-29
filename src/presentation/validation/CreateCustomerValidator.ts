@@ -1,6 +1,7 @@
 import { body, check } from "express-validator";
 import { ICustomerRepository } from "../../repository/repository/interfaces/ICustomerRepository";
 import { CreateCustomValidator } from "./CreateCustomValidator";
+import { HttpStatus } from "../../domain/enums/httpStatus";
 
 export class CreateCustomerValidator {
     constructor(private customerRepository: ICustomerRepository) { }
@@ -17,7 +18,7 @@ export class CreateCustomerValidator {
                 .withMessage("'Email' must not be empty.")
                 .custom(async (email) => {
                     if (await this.customerRepository.findByEmail(email)) {
-                        throw new Error('Email address is already in use.');
+                        return Promise.reject({ error: 'Email address is already in use'});
                     }
 
                     return false;
