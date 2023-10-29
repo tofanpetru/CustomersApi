@@ -39,9 +39,9 @@ export class CustomerRoutes {
          *             data:
          *               type: array
          *               items:
-         *                 $ref: '#/definitions/Customer'
+         *                 $ref: '#/components/schemas/Customer'
          *             pagination:
-         *               $ref: '#/definitions/Pagination'
+         *               $ref: '#/components/schemas/Pagination'
          *       400:
          *         description: Bad request
          */
@@ -76,7 +76,7 @@ export class CustomerRoutes {
          *       200:
          *         description: Successfully found the customer
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *       404:
          *         description: Customer not found with the specified ID
          *       400:
@@ -111,12 +111,12 @@ export class CustomerRoutes {
          *         description: The new customer
          *         required: true
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *     responses:
          *       201:
          *         description: Successfully created the customer
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *       400:
          *         description: Bad request
          */
@@ -148,12 +148,12 @@ export class CustomerRoutes {
          *         description: The updated customer
          *         required: true
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *     responses:
          *       200:
          *         description: Successfully updated the customer
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *       404:
          *         description: Customer not found with the specified ID
          *       400:
@@ -192,7 +192,7 @@ export class CustomerRoutes {
          *       200:
          *         description: Successfully deleted the customer
          *         schema:
-         *           $ref: '#/definitions/Customer'
+         *           $ref: '#/components/schemas/Customer'
          *       404:
          *         description: Customer not found with the specified ID
          *       400:

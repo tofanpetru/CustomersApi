@@ -13,20 +13,24 @@ const options = {
                 url: 'http://localhost:3000',
             },
         ],
-        Customer: {
-            type: 'object',
-            properties: {
-                name: { type: 'string' },
-                email: { type: 'string' }
-            },
-        },
-        Pagination: {
-            type: 'object',
-            properties: {
-                page: { type: 'integer' },
-                perPage: { type: 'integer' }
-            },
-        },
+        components: {
+            schemas: {
+                Customer: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        email: { type: 'string' }
+                    },
+                },
+                Pagination: {
+                    type: 'object',
+                    properties: {
+                        page: { type: 'integer' },
+                        perPage: { type: 'integer' }
+                    },
+                },
+            }
+        }
     },
     apis: ['./src/presentation/routes/*.ts'],
 };
