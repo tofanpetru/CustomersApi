@@ -3,6 +3,7 @@ import { Customer } from '../../repository/persistence/Customer';
 import { PaginationService } from '../../application/services/PaginationService';
 import { ICustomerRepository } from '../../repository/repository/interfaces/ICustomerRepository';
 import { CreateCustomerValidator } from '../validation/CreateCustomerValidator';
+import { HttpStatus } from '../../domain/enums/httpStatus';
 
 export class CustomerRoutes {
     constructor(private customerRepository: ICustomerRepository) {
