@@ -11,8 +11,187 @@ export class CustomerRoutes {
 
     public registerRoutes(): Router {
         const router = express.Router();
-        const createCustomerValidator = new CreateCustomerValidator(this.customerRepository);
 
+        this.registerGetAllCustomers(router);
+        this.registerGetById(router);
+        this.registerCreateNewCustomer(router, new CreateCustomerValidator(this.customerRepository));
+        this.registerUpdateCustomer(router);
+        this.registerDelete(router);
+
+        return router;
+    }
+
+    private registerCreateNewCustomer(router: Router, createCustomerValidator: CreateCustomerValidator) {
+        /**
+         * @swagger
+         * /customers:
+         *   post:
+         *     summary: Create a new customer
+         *     description: Create a new customer
+         *     tags:
+         *       - Customers
+         *     requestBody:
+         *       description: The new customer
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             $ref: '#/components/schemas/Customer'
+         *     responses:
+         *       201:
+         *         description: Successfully created the customer
+         *         schema:
+         *           $ref: '#/components/schemas/Customer'
+         *       400:
+         *         description: Bad request
+         *       422:
+         *         description: Unprocessable Entity
+         *         content:
+         *           application/json:
+         *             example:
+         *               errors: ["'Name' must not be empty.", "'Email' must be a valid email address."]
+         */
+        router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
+            try {
+                const newCustomer: Customer = req.body;
+                const addedCustomer = await this.customerRepository.createCustomer(newCustomer);
+
+                res.status(HttpStatus.CREATED).json(addedCustomer);
+            } catch (error: any) {
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
+            }
+        });
+    }
+
+    private registerUpdateCustomer(router: Router) {
+        /**
+         * @swagger
+         * /customers/{id}:
+         *   put:
+         *     summary: Update customer by ID
+         *     description: Update a customer by its ID
+         *     tags:
+         *       - Customers
+         *     parameters:
+         *       - name: id
+         *         in: path
+         *         description: Customer ID
+         *     requestBody:
+         *       description: The updated customer
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             $ref: '#/components/schemas/Customer'
+         *     responses:
+         *       200:
+         *         description: Successfully updated the customer
+         *         schema:
+         *           $ref: '#/components/schemas/Customer'
+         *       404:
+         *         description: Customer not found with the specified ID
+         *       400:
+         *         description: Bad request
+         */
+        router.put('/:id', async (req: Request, res: Response) => {
+            try {
+                const customerId = req.params.id;
+                const updatedCustomer: Customer = req.body;
+
+                const updated = await this.customerRepository.updateCustomer(customerId, updatedCustomer);
+
+                if (updated) {
+                    res.status(HttpStatus.OK).json(updated);
+                } else {
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
+                }
+            } catch (error: any) {
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
+            }
+        });
+    }
+
+    protected registerDelete(router: Router) {
+        /**
+         * @swagger
+         * /customers/{id}:
+         *   delete:
+         *     summary: Delete customer by ID
+         *     description: Delete a customer by its ID
+         *     tags:
+         *       - Customers
+         *     parameters:
+         *       - name: id
+         *         in: path
+         *         description: Customer ID
+         *     responses:
+         *       200:
+         *         description: Successfully deleted the customer
+         *         schema:
+         *           $ref: '#/components/schemas/Customer'
+         *       404:
+         *         description: Customer not found with the specified ID
+         *       400:
+         *         description: Bad request
+         */
+        router.delete('/:id', async (req: Request, res: Response) => {
+            try {
+                const customerId = req.params.id;
+                const deletedCustomer = await this.customerRepository.deleteCustomerById(customerId);
+
+                if (deletedCustomer) {
+                    res.status(HttpStatus.OK).json(deletedCustomer);
+                } else {
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
+                }
+            } catch (error: any) {
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
+            }
+        });
+
+        return router;
+    }
+
+    protected registerGetById(router: Router) {
+        /**
+         * @swagger
+         * /customers/{id}:
+         *   get:
+         *     summary: Get customer by ID
+         *     description: Get a customer by its ID
+         *     tags:
+         *       - Customers
+         *     parameters:
+         *       - name: id
+         *         in: path
+         *         description: Customer ID
+         *     responses:
+         *       200:
+         *         description: Successfully found the customer
+         *         schema:
+         *           $ref: '#/components/schemas/Customer'
+         *       404:
+         *         description: Customer not found with the specified ID
+         *       400:
+         *         description: Bad request
+         */
+        router.get('/:id', async (req: Request, res: Response) => {
+            try {
+                const customerId = req.params.id;
+                const customer = await this.customerRepository.getCustomerById(customerId);
+
+                if (customer) {
+                    res.status(HttpStatus.OK).json(customer);
+                } else {
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
+                }
+            } catch (error: any) {
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
+            }
+        });
+    }
+
+    protected registerGetAllCustomers(router: Router) {
         /**
          * @swagger
          * /customers:
@@ -59,167 +238,5 @@ export class CustomerRoutes {
 
             res.json(paginatedData);
         });
-
-        /**
-         * @swagger
-         * /customers/{id}:
-         *   get:
-         *     summary: Get customer by ID
-         *     description: Get a customer by its ID
-         *     tags:
-         *       - Customers
-         *     parameters:
-         *       - name: id
-         *         in: path
-         *         description: Customer ID
-         *     responses:
-         *       200:
-         *         description: Successfully found the customer
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
-         *       404:
-         *         description: Customer not found with the specified ID
-         *       400:
-         *         description: Bad request
-         */
-        router.get('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const customer = await this.customerRepository.getCustomerById(customerId);
-
-                if (customer) {
-                    res.status(HttpStatus.OK).json(customer);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
-
-        /**
-         * @swagger
-         * /customers:
-         *   post:
-         *     summary: Create a new customer
-         *     description: Create a new customer
-         *     tags:
-         *       - Customers
-         *     requestBody:
-         *       description: The new customer
-         *       required: true
-         *       content:
-         *         application/json:
-         *           schema:
-         *             $ref: '#/components/schemas/Customer'
-         *     responses:
-         *       201:
-         *         description: Successfully created the customer
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
-         *       400:
-         *         description: Bad request
-         *       422:
-         *         description: Unprocessable Entity
-         *         content:
-         *           application/json:
-         *             example:
-         *               errors: ["'Name' must not be empty.", "'Email' must be a valid email address."]
-         */
-        router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
-            try {
-                const newCustomer: Customer = req.body;
-                const addedCustomer = await this.customerRepository.createCustomer(newCustomer);
-
-                res.status(HttpStatus.CREATED).json(addedCustomer);
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
-
-        /**
-         * @swagger
-         * /customers/{id}:
-         *   put:
-         *     summary: Update customer by ID
-         *     description: Update a customer by its ID
-         *     tags:
-         *       - Customers
-         *     parameters:
-         *       - name: id
-         *         in: path
-         *         description: Customer ID
-         *     requestBody:
-         *       description: The updated customer
-         *       required: true
-         *       content:
-         *         application/json:
-         *           schema:
-         *             $ref: '#/components/schemas/Customer'
-         *     responses:
-         *       200:
-         *         description: Successfully updated the customer
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
-         *       404:
-         *         description: Customer not found with the specified ID
-         *       400:
-         *         description: Bad request
-         */
-        router.put('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const updatedCustomer: Customer = req.body;
-
-                const updated = await this.customerRepository.updateCustomer(customerId, updatedCustomer);
-
-                if (updated) {
-                    res.status(HttpStatus.OK).json(updated);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
-
-        /**
-         * @swagger
-         * /customers/{id}:
-         *   delete:
-         *     summary: Delete customer by ID
-         *     description: Delete a customer by its ID
-         *     tags:
-         *       - Customers
-         *     parameters:
-         *       - name: id
-         *         in: path
-         *         description: Customer ID
-         *     responses:
-         *       200:
-         *         description: Successfully deleted the customer
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
-         *       404:
-         *         description: Customer not found with the specified ID
-         *       400:
-         *         description: Bad request
-         */
-        router.delete('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const deletedCustomer = await this.customerRepository.deleteCustomerById(customerId);
-
-                if (deletedCustomer) {
-                    res.status(HttpStatus.OK).json(deletedCustomer);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
-
-        return router;
     }
 }
