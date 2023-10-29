@@ -6,8 +6,8 @@ import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import { CustomerRoutes } from '../presentation/routes/customerRoutes';
 import { DbContext } from '../repository/dbContext';
-import { GenericRepository } from '../repository/repository/abstract/genericRepository';
 import { Customer } from '../repository/persistence/Customer';
+import CustomerRepository from '../repository/repository/implementations/customerRepository';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -31,7 +31,7 @@ function registerServices(app: Express): void {
 
 export function registerRoutes(app: Express): void {
     const dbContext = new DbContext<Customer>(); 
-    const customerRepository = new GenericRepository<Customer>(dbContext); 
+    const customerRepository = new CustomerRepository(dbContext); 
 
     const customerRoutes = new CustomerRoutes(customerRepository);
 
