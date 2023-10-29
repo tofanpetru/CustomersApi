@@ -1,21 +1,20 @@
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerJsdoc from "swagger-jsdoc";
 
-const versions = ['v1', 'v2'];
-
-const swaggerSpecs: any[] = [];
-
-versions.forEach(version => {
+export function generateSwaggerSpec(version: number) {
     const options = {
         definition: {
             openapi: '3.0.0',
             info: {
-                title: `Customer API (v${version})`,
-                version: version,
-                description: `API for managing customers - Version ${version}`,
+                title: `Customer API (v${version.toString()})`,
+                version: version.toString(),
+                description: `API for managing customers - Version ${version.toString()}`,
             },
             servers: [
                 {
-                    url: `http://localhost:3000/${version}`,
+                    url: `http://localhost:3000/v${version.toString()}`,
+                },
+                {
+                    url: `http://localhost:3000/v${version.toString()}`,
                 },
             ],
             components: {
@@ -33,21 +32,12 @@ versions.forEach(version => {
                             page: { type: 'integer' },
                             perPage: { type: 'integer' },
                         },
-                    },
+                    }
                 },
             },
         },
-        apis: [`./src/presentation/routes/${version}/*.ts`, './src/presentation/routes/*.ts'],
+        apis: [`./src/presentation/routes/v${version}/*.ts`, './src/presentation/routes/defaultRoute.ts'],
     };
 
-    const swaggerSpec = swaggerJsdoc(options);
-    swaggerSpecs.push(swaggerSpec);
-});
-
-const combinedSwaggerSpec = swaggerSpecs.reduce((combined, spec) => {
-    combined.paths = { ...combined.paths, ...spec.paths };
-    combined.components.schemas = { ...combined.components.schemas, ...spec.components.schemas };
-    return combined;
-}, swaggerSpecs[0]);
-
-export { combinedSwaggerSpec };
+    return swaggerJsdoc(options);
+}

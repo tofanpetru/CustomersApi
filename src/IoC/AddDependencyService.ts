@@ -9,7 +9,7 @@ import CustomerRepository from '../repository/repository/implementations/custome
 import ErrorHandlingMiddleware from '../presentation/middlewares/ErrorHandlingMiddleware';
 import { DefaultRoute } from '../presentation/routes/defaultRoute';
 import { CustomerRoutesV2 } from '../presentation/routes/v2/customerRoutesV2';
-import { combinedSwaggerSpec } from '../presentation/swagger';
+import { generateSwaggerSpec } from '../presentation/swagger';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -32,6 +32,7 @@ function registerServices(app: Express): void {
 }
 
 export function registerRoutes(app: Express): void {
+    const versions = [1, 2];
     const dbContext = new DbContext<Customer>();
     const customerRepository = new CustomerRepository(dbContext);
 
@@ -39,9 +40,10 @@ export function registerRoutes(app: Express): void {
     const customerRoutesV2 = new CustomerRoutesV2(customerRepository);
     const defaultRoute = new DefaultRoute();
 
+    versions.forEach(version => {
+        app.use(`/api-docs/v${version}`, swaggerUi.serve, swaggerUi.setup(generateSwaggerSpec(version)));
+    });
     app.use('/v1/customers', customerRoutes.registerRoutes());
     app.use('/v2/customers', customerRoutesV2.registerRoutes());
-    app.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(combinedSwaggerSpec));
-    app.use('/api-docs/v2', swaggerUi.serve, swaggerUi.setup(combinedSwaggerSpec))
     app.get('/', defaultRoute.registerRoute());
 }
