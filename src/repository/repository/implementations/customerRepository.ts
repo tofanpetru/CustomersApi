@@ -1,6 +1,6 @@
 import { Customer } from "../../persistence/Customer";
 import { DbContext } from "../../dbContext";
-import { GenericRepository } from "../abstract/GenericRepository";
+import { GenericRepository } from "../abstract/genericRepository";
 
 class CustomerRepository extends GenericRepository<Customer> {
     constructor(dbContext: DbContext<Customer>) {

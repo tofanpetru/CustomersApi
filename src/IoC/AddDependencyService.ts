@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import { ErrorHandlingMiddleware } from '../presentation/routes/middlewares/ErrorHandlingMiddleware';
 import { LoggingMiddleware } from '../presentation/routes/middlewares/LoggingMiddleware';
-import { seedDatabase } from '../repository/dbContext';
 import { swaggerSpec } from '../../swagger';
 import swaggerUi from 'swagger-ui-express';
 import customerRoutes from '../presentation/routes/customerRoutes';
@@ -25,8 +24,6 @@ function registerCustomMiddleware(app: Express): void {
 
 function registerServices(app: Express): void {
     app.use(bodyParser.json());
-
-    seedDatabase(100);
 }
 
 function registerRoutes(app: Express): void {
