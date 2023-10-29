@@ -21,7 +21,7 @@ export class CustomerRoutes {
         return router;
     }
 
-    private registerCreateNewCustomer(router: Router, createCustomerValidator: CreateCustomerValidator) {
+    protected registerCreateNewCustomer(router: Router, createCustomerValidator: CreateCustomerValidator) {
         /**
          * @swagger
          * /customers:
@@ -63,7 +63,7 @@ export class CustomerRoutes {
         });
     }
 
-    private registerUpdateCustomer(router: Router) {
+    protected registerUpdateCustomer(router: Router) {
         /**
          * @swagger
          * /customers/{id}:

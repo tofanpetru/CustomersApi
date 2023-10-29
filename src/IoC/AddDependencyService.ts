@@ -9,6 +9,7 @@ import { Customer } from '../repository/persistence/Customer';
 import CustomerRepository from '../repository/repository/implementations/customerRepository';
 import ErrorHandlingMiddleware from '../presentation/middlewares/ErrorHandlingMiddleware';
 import { DefaultRoute } from '../presentation/routes/defaultRoute';
+import { CustomerRoutesV2 } from '../presentation/routes/CustomerRoutesV2';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -35,9 +36,11 @@ export function registerRoutes(app: Express): void {
     const customerRepository = new CustomerRepository(dbContext);
 
     const customerRoutes = new CustomerRoutes(customerRepository);
+    const customerRoutesV2 = new CustomerRoutesV2(customerRepository);
     const defaultRoute = new DefaultRoute();
 
     app.use('/customers', customerRoutes.registerRoutes());
+    app.use('/v2/customers', customerRoutesV2.registerRoutes());
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.get('/', defaultRoute.registerRoute());
 }
