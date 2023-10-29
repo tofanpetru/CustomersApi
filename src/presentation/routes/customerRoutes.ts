@@ -68,7 +68,22 @@ export class CustomerRoutes {
             } catch (error: any) {
                 res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
             }
-        });        
+        });    
+        
+        router.delete('/:id', async (req: Request, res: Response) => {
+            try {
+                const customerId = req.params.id;
+                const deletedCustomer = await this.customerRepository.deleteCustomerById(customerId);
+        
+                if (deletedCustomer) {
+                    res.status(HttpStatus.OK).json(deletedCustomer);
+                } else {
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
+                }
+            } catch (error: any) {
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
+            }
+        });
 
         return router;
     }
