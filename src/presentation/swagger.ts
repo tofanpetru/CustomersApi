@@ -1,4 +1,3 @@
-import { Customer } from './src/repository/persistence/Customer';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {

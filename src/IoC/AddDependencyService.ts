@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import { ErrorHandlingMiddleware } from '../presentation/routes/middlewares/ErrorHandlingMiddleware';
 import { LoggingMiddleware } from '../presentation/routes/middlewares/LoggingMiddleware';
-import { swaggerSpec } from '../../swagger';
+import { swaggerSpec } from '../presentation/swagger';
 import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import { CustomerRoutes } from '../presentation/routes/customerRoutes';
