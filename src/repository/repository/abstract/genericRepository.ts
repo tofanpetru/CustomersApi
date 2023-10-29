@@ -1,5 +1,6 @@
 import { DbContext } from "../../dbContext";
 import { v4 as uuidv4 } from 'uuid';
+import { Identifiable } from "../../persistence/Identifiable";
 
 export class GenericRepository<T extends Identifiable> implements IRepository<T> {
     constructor(private dbContext: DbContext<T>) { }
