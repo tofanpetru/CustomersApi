@@ -12,10 +12,7 @@ export function generateSwaggerSpec(version: number) {
             servers: [
                 {
                     url: `http://localhost:3000/v${version.toString()}`,
-                },
-                {
-                    url: `http://localhost:3000/v${version.toString()}`,
-                },
+                }
             ],
             components: {
                 schemas: {
