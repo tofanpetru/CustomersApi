@@ -1,8 +1,8 @@
 import express, { Request, Response, Router } from 'express';
 import { Customer } from '../../repository/persistence/Customer';
-import { CreateCustomerRequestValidator } from '../validation/CreateCustomerRequestValidator';
 import { PaginationService } from '../../application/services/PaginationService';
 import { ICustomerRepository } from '../../repository/repository/interfaces/ICustomerRepository';
+import { CreateCustomerValidator } from '../validation/CreateCustomerValidator';
 
 export class CustomerRoutes {
     constructor(private customerRepository: ICustomerRepository) {
@@ -10,6 +10,7 @@ export class CustomerRoutes {
 
     public registerRoutes(): Router {
         const router = express.Router();
+        const createCustomerValidator = new CreateCustomerValidator(this.customerRepository);
 
         router.get('/', async (req: Request, res: Response) => {
             const { page, perPage } = req.query;
@@ -41,7 +42,7 @@ export class CustomerRoutes {
             }
         });
 
-        router.post('/', CreateCustomerRequestValidator, async (req: Request, res: Response) => {
+        router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
             try {
                 const newCustomer: Customer = req.body;
                 const addedCustomer = await this.customerRepository.createCustomer(newCustomer);

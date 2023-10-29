@@ -16,6 +16,10 @@ class CustomerRepository extends GenericRepository<Customer> implements ICustome
         return await this.create(newCustomer);
     }
 
+    async findByEmail(email: string): Promise<Customer | null> {
+        return Promise.resolve(this.dbContext.items.find((customer) => customer.email === email) || null);
+    }
+
     async updateCustomer(customerId: string, updatedCustomer: Customer): Promise<Customer | null> {
         if (await this.update(customerId, updatedCustomer)) {
             return updatedCustomer;

@@ -4,7 +4,7 @@ import { Identifiable } from "../../persistence/Identifiable";
 import { IRepository } from "../interfaces/IRepository";
 
 export class GenericRepository<T extends Identifiable> implements IRepository<T> {
-    constructor(private dbContext: DbContext<T>) { }
+    constructor(protected dbContext: DbContext<T>) { }
 
     create(item: T): Promise<T> {
         const newItem = {

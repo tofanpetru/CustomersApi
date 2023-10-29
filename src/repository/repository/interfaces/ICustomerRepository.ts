@@ -6,4 +6,5 @@ export interface ICustomerRepository {
     updateCustomer(customerId: string, updatedCustomer: Customer): Promise<Customer | null>;
     getCustomerById(customerId: string): Promise<Customer | null>;
     deleteCustomerById(customerId: string): Promise<Customer | null>;
+    findByEmail(email: string): Promise<Customer | null>;
 }
