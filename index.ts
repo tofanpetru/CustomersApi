@@ -8,9 +8,5 @@ const app = express();
 registerDependencies(app);
 
 app.listen(port, () => {
-  const contentLines = [
-    'API is available at http://localhost:' + port + '/customers',
-    'Swagger UI is available at http://localhost:' + port + '/api-docs'];
-
-  ConsoleService.printMessage(contentLines);
+  ConsoleService.getAndDisplayRoutes();
 });
