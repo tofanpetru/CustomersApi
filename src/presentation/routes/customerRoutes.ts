@@ -31,44 +31,44 @@ export class CustomerRoutes {
             try {
                 const customerId = req.params.id;
                 const customer = await this.customerRepository.getCustomerById(customerId);
-
+        
                 if (customer) {
-                    res.status(200).json(customer);
+                    res.status(HttpStatus.OK).json(customer);
                 } else {
-                    res.status(404).json({ error: 'Customer not found with ID ' + customerId });
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
                 }
             } catch (error: any) {
-                res.status(400).json({ error: error.message });
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
             }
         });
-
+        
         router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
             try {
                 const newCustomer: Customer = req.body;
                 const addedCustomer = await this.customerRepository.createCustomer(newCustomer);
-
-                res.status(201).json(addedCustomer);
+        
+                res.status(HttpStatus.CREATED).json(addedCustomer);
             } catch (error: any) {
-                res.status(400).json({ error: error.message });
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
             }
         });
-
+        
         router.put('/:id', async (req: Request, res: Response) => {
             try {
                 const customerId = req.params.id;
                 const updatedCustomer: Customer = req.body;
-
+        
                 const updated = await this.customerRepository.updateCustomer(customerId, updatedCustomer);
-
+        
                 if (updated) {
-                    res.status(200).json(updated);
+                    res.status(HttpStatus.OK).json(updated);
                 } else {
-                    res.status(404).json({ error: 'Customer not found with ID ' + customerId });
+                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
                 }
             } catch (error: any) {
-                res.status(400).json({ error: error.message });
+                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
             }
-        });
+        });        
 
         return router;
     }
