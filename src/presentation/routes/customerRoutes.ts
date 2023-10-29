@@ -105,13 +105,13 @@ export class CustomerRoutes {
          *     description: Create a new customer
          *     tags:
          *       - Customers
-         *     parameters:
-         *       - in: body
-         *         name: customer
-         *         description: The new customer
-         *         required: true
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
+         *     requestBody:
+         *       description: The new customer
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             $ref: '#/components/schemas/Customer'
          *     responses:
          *       201:
          *         description: Successfully created the customer
@@ -143,12 +143,13 @@ export class CustomerRoutes {
          *       - name: id
          *         in: path
          *         description: Customer ID
-         *       - in: body
-         *         name: customer
-         *         description: The updated customer
-         *         required: true
-         *         schema:
-         *           $ref: '#/components/schemas/Customer'
+         *     requestBody:
+         *       description: The updated customer
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             $ref: '#/components/schemas/Customer'
          *     responses:
          *       200:
          *         description: Successfully updated the customer
