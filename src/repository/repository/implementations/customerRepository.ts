@@ -1,4 +1,6 @@
 import { Customer } from "../../persistence/Customer";
+import { faker } from '@faker-js/faker';
+import { v4 as uuidv4 } from 'uuid';
 import { DbContext } from "../../dbContext";
 import { GenericRepository } from "../abstract/genericRepository";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
@@ -6,6 +8,7 @@ import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 class CustomerRepository extends GenericRepository<Customer> implements ICustomerRepository {
     constructor(dbContext: DbContext<Customer>) {
         super(dbContext);
+        this.seedDatabase();
     }
 
     async getAll(): Promise<Customer[]> {
@@ -34,6 +37,19 @@ class CustomerRepository extends GenericRepository<Customer> implements ICustome
 
     async deleteCustomerById(customerId: string): Promise<Customer | null> {
         return await this.delete(customerId);
+    }
+
+    private seedDatabase() {
+        if (this.dbContext.items.length === 0) {
+            for (let i = 0; i < 290; i++) {
+                const fakeData: Customer = {
+                    _id: uuidv4(),
+                    name: faker.person.fullName(),
+                    email: faker.internet.email(),
+                };
+                this.dbContext.items.push(fakeData);
+            }
+        }
     }
 }
 
