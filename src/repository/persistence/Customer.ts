@@ -1,5 +1,4 @@
-export interface Customer {
-    id: number;
+export interface Customer extends Identifiable{
     name: string;
     email: string;
 }
