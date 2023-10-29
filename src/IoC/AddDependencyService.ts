@@ -3,8 +3,11 @@ import { ErrorHandlingMiddleware } from '../presentation/routes/middlewares/Erro
 import { LoggingMiddleware } from '../presentation/routes/middlewares/LoggingMiddleware';
 import { swaggerSpec } from '../../swagger';
 import swaggerUi from 'swagger-ui-express';
-import customerRoutes from '../presentation/routes/customerRoutes';
 import bodyParser from 'body-parser';
+import { CustomerRoutes } from '../presentation/routes/customerRoutes';
+import { DbContext } from '../repository/dbContext';
+import { GenericRepository } from '../repository/repository/abstract/genericRepository';
+import { Customer } from '../repository/persistence/Customer';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -26,7 +29,12 @@ function registerServices(app: Express): void {
     app.use(bodyParser.json());
 }
 
-function registerRoutes(app: Express): void {
-    app.use('/customers', customerRoutes);
+export function registerRoutes(app: Express): void {
+    const dbContext = new DbContext<Customer>(); 
+    const customerRepository = new GenericRepository<Customer>(dbContext); 
+
+    const customerRoutes = new CustomerRoutes(customerRepository);
+
+    app.use('/customers', customerRoutes.registerRoutes());
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
