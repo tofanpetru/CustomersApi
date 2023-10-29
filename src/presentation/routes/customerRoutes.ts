@@ -15,7 +15,7 @@ export class CustomerRoutes {
 
         /**
          * @swagger
-         * /:
+         * /customers:
          *   get:
          *     summary: Get a list of customers
          *     description: Get a paginated list of customers
@@ -62,7 +62,7 @@ export class CustomerRoutes {
 
         /**
          * @swagger
-         * /:id:
+         * /customers/{id}:
          *   get:
          *     summary: Get customer by ID
          *     description: Get a customer by its ID
@@ -99,7 +99,7 @@ export class CustomerRoutes {
 
         /**
          * @swagger
-         * /:
+         * /customers:
          *   post:
          *     summary: Create a new customer
          *     description: Create a new customer
@@ -133,7 +133,7 @@ export class CustomerRoutes {
 
         /**
          * @swagger
-         * /:id:
+         * /customers/{id}:
          *   put:
          *     summary: Update customer by ID
          *     description: Update a customer by its ID
@@ -178,7 +178,7 @@ export class CustomerRoutes {
 
         /**
          * @swagger
-         * /:id:
+         * /customers/{id}:
          *   delete:
          *     summary: Delete customer by ID
          *     description: Delete a customer by its ID
