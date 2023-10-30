@@ -9,7 +9,7 @@ import CustomerRepository from '../repository/repository/implementations/custome
 import ErrorHandlingMiddleware from '../presentation/middlewares/ErrorHandlingMiddleware';
 import { DefaultRoute } from '../presentation/routes/defaultRoute';
 import { CustomerRoutesV2 } from '../presentation/routes/v2/customerRoutesV2';
-import { generateSwaggerSpec } from '../presentation/swagger';
+import { swaggerSpec } from '../presentation/swagger';
 
 export function registerDependencies(app: Express): void {
     registerCustomMiddleware(app);
@@ -40,10 +40,8 @@ export function registerRoutes(app: Express): void {
     const customerRoutesV2 = new CustomerRoutesV2(customerRepository);
     const defaultRoute = new DefaultRoute();
 
-    versions.forEach(version => {
-        app.use(`/api-docs/v${version}`, swaggerUi.serve, swaggerUi.setup(generateSwaggerSpec(version)));
-    });
     app.use('/v1/customers', customerRoutes.registerRoutes());
     app.use('/v2/customers', customerRoutesV2.registerRoutes());
+    app.use(`/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.get('/', defaultRoute.registerRoute());
 }

@@ -25,8 +25,7 @@ export class DefaultRoute {
             const availableEndpoints = [
                 'http://localhost:3000/v1/customers',
                 'http://localhost:3000/v2/customers',
-                'http://localhost:3000/api-docs/v1',
-                'http://localhost:3000/api-docs/v2',
+                'http://localhost:3000/api-docs'
             ];
             res.status(HttpStatus.OK).json(availableEndpoints);
         });

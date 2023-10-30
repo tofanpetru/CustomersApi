@@ -1,40 +1,40 @@
 import swaggerJsdoc from "swagger-jsdoc";
 
-export function generateSwaggerSpec(version: number) {
-    const options = {
-        definition: {
-            openapi: '3.0.0',
-            info: {
-                title: `Customer API (v${version.toString()})`,
-                version: version.toString(),
-                description: `API for managing customers - Version ${version.toString()}`,
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Customer API',
+            version: '1.0.0',
+            description: 'API for managing customers',
+        },
+        servers: [
+            {
+                url: 'http://localhost:3000',
             },
-            servers: [
-                {
-                    url: `http://localhost:3000/v${version.toString()}`,
-                }
-            ],
-            components: {
-                schemas: {
-                    Customer: {
-                        type: 'object',
-                        properties: {
-                            name: { type: 'string' },
-                            email: { type: 'string' },
-                        },
+        ],
+        components: {
+            schemas: {
+                Customer: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        email: { type: 'string' },
                     },
-                    Pagination: {
-                        type: 'object',
-                        properties: {
-                            page: { type: 'integer' },
-                            perPage: { type: 'integer' },
-                        },
-                    }
                 },
+                Pagination: {
+                    type: 'object',
+                    properties: {
+                        page: { type: 'integer' },
+                        perPage: { type: 'integer' },
+                    },
+                }
             },
         },
-        apis: [`./src/presentation/routes/v${version}/*.ts`, './src/presentation/routes/defaultRoute.ts'],
-    };
+    },
+    apis: [`./src/presentation/routes/**/*.ts`, './src/presentation/routes/*.ts'],
+};
 
-    return swaggerJsdoc(options);
-}
+const swaggerSpec = swaggerJsdoc(options);
+
+export { swaggerSpec };

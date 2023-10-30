@@ -24,7 +24,7 @@ export class CustomerRoutes {
     protected registerCreateNewCustomer(router: Router, createCustomerValidator: CreateCustomerValidator) {
         /**
          * @swagger
-         * /customers:
+         * /v1/customers:
          *   post:
          *     summary: Create a new customer
          *     description: Create a new customer
@@ -66,7 +66,7 @@ export class CustomerRoutes {
     protected registerUpdateCustomer(router: Router) {
         /**
          * @swagger
-         * /customers/{id}:
+         * /v1/customers/{id}:
          *   put:
          *     summary: Update customer by ID
          *     description: Update a customer by its ID
@@ -114,7 +114,7 @@ export class CustomerRoutes {
     protected registerDelete(router: Router) {
         /**
          * @swagger
-         * /customers/{id}:
+         * /v1/customers/{id}:
          *   delete:
          *     summary: Delete customer by ID
          *     description: Delete a customer by its ID
@@ -155,7 +155,7 @@ export class CustomerRoutes {
     protected registerGetById(router: Router) {
         /**
          * @swagger
-         * /customers/{id}:
+         * /v1/customers/{id}:
          *   get:
          *     summary: Get customer by ID
          *     description: Get a customer by its ID
@@ -194,7 +194,7 @@ export class CustomerRoutes {
     protected registerGetAllCustomers(router: Router) {
         /**
          * @swagger
-         * /customers:
+         * /v1/customers:
          *   get:
          *     summary: Get a list of customers
          *     description: Get a paginated list of customers
