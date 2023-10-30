@@ -8,7 +8,7 @@ export const CreateCustomValidator = (validationRules: ValidationChain[]) => {
         ...validationRules,
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
-            
+
             if (!errors.isEmpty()) {
                 const errorMessages = errors.array().map((error) => error.msg);
                 return res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ errors: errorMessages });

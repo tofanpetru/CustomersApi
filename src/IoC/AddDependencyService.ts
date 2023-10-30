@@ -32,7 +32,6 @@ function registerServices(app: Express): void {
 }
 
 export function registerRoutes(app: Express): void {
-    const versions = [1, 2];
     const dbContext = new DbContext<Customer>();
     const customerRepository = new CustomerRepository(dbContext);
 

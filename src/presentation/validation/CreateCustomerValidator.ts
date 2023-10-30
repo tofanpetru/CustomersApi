@@ -18,7 +18,7 @@ export class CreateCustomerValidator {
                 .withMessage("'Email' must not be empty.")
                 .custom(async (email) => {
                     if (await this.customerRepository.findByEmail(email)) {
-                        return Promise.reject({ error: 'Email address is already in use'});
+                        return Promise.reject({ error: 'Email address is already in use' });
                     }
 
                     return false;

@@ -16,7 +16,7 @@ export class ConsoleService {
         });
         console.log('+' + '-'.repeat(maxLength + 2) + '+');
     }
-    
+
     public static getAndDisplayRoutes(port: number = 3000) {
         const options = {
             host: 'localhost',
