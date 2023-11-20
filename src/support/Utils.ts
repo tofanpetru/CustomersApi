@@ -1,33 +1,32 @@
 export class Utils {
 
-    // https://www.typescriptlang.org/docs/handbook/
+    private text = "text";
 
-    static undef: number;
-    static text = "text";
-
-    public static sum(a: number, b: number) {
+    public sum(a: number, b: number) {
         return a + b;
     }
 
-    public static devide(a: number, b: number) {
+    public divide(a: number, b: number) {
         return a / b;
     }
 
-    public static createObjectWithDate() {
+    public createObjectWithDate() {
         const obj = {datetime: ''}
         obj.datetime = Date.now().toString();
         return obj;
     }
 
-    public static returnBoolean(v: boolean) {
+    public returnBoolean(v: boolean) {
         return !v
     }
 
-    public static creteArray(...args: any[]) {
+    public creteArray(...args: any[]) {
         return Array.from(args);
     }
 
-    public static throwException() {
+    public throwException() {
         throw new Error("This error is thrown")
     }
 }
+
+export const utils = new Utils();

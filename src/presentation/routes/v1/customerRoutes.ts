@@ -3,10 +3,15 @@ import { Customer } from '../../../repository/persistence/Customer';
 import { PaginationService } from '../../../application/services/PaginationService';
 import { ICustomerRepository } from '../../../repository/repository/interfaces/ICustomerRepository';
 import { CreateCustomerValidator } from '../../validation/CreateCustomerValidator';
+import {CustomerController} from "../../controllers/v1/customerController";
 import { HttpStatus } from '../../../domain/enums/httpStatus';
 
 export class CustomerRoutes {
+
+    protected customerController: CustomerController;
+
     constructor(protected customerRepository: ICustomerRepository) {
+        this.customerController = new CustomerController(customerRepository);
     }
 
     public registerRoutes(): Router {
@@ -51,16 +56,7 @@ export class CustomerRoutes {
          *             example:
          *               errors: ["'Name' must not be empty.", "'Email' must be a valid email address."]
          */
-        router.post('/', createCustomerValidator.getValidator(), async (req: Request, res: Response) => {
-            try {
-                const newCustomer: Customer = req.body;
-                const addedCustomer = await this.customerRepository.createCustomer(newCustomer);
-
-                res.status(HttpStatus.CREATED).json(addedCustomer);
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
+        router.post('/', createCustomerValidator.getValidator(), this.customerController.createNewCustomer.bind(this.customerController));
     }
 
     protected registerUpdateCustomer(router: Router) {
@@ -93,22 +89,7 @@ export class CustomerRoutes {
          *       400:
          *         description: Bad request
          */
-        router.put('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const updatedCustomer: Customer = req.body;
-
-                const updated = await this.customerRepository.updateCustomer(customerId, updatedCustomer);
-
-                if (updated) {
-                    res.status(HttpStatus.OK).json(updated);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
+        router.put('/:id', this.customerController.updateCustomer.bind(this.customerController));
     }
 
     protected registerDelete(router: Router) {
@@ -134,21 +115,7 @@ export class CustomerRoutes {
          *       400:
          *         description: Bad request
          */
-        router.delete('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const deletedCustomer = await this.customerRepository.deleteCustomerById(customerId);
-
-                if (deletedCustomer) {
-                    res.status(HttpStatus.OK).json(deletedCustomer);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
-
+        router.delete('/:id', this.customerController.deleteCustomer.bind(this.customerController));
         return router;
     }
 
@@ -175,20 +142,7 @@ export class CustomerRoutes {
          *       400:
          *         description: Bad request
          */
-        router.get('/:id', async (req: Request, res: Response) => {
-            try {
-                const customerId = req.params.id;
-                const customer = await this.customerRepository.getCustomerById(customerId);
-
-                if (customer) {
-                    res.status(HttpStatus.OK).json(customer);
-                } else {
-                    res.status(HttpStatus.NOT_FOUND).json({ error: 'Customer not found with ID ' + customerId });
-                }
-            } catch (error: any) {
-                res.status(HttpStatus.BAD_REQUEST).json({ error: error.message });
-            }
-        });
+        router.get('/:id', this.customerController.getByID.bind(this.customerController));
     }
 
     protected registerGetAllCustomers(router: Router) {
@@ -224,19 +178,6 @@ export class CustomerRoutes {
          *       400:
          *         description: Bad request
          */
-        router.get('/', async (req: Request, res: Response) => {
-            const { page, perPage } = req.query;
-            const customers = await this.customerRepository.getAll();
-
-            const paginationService = new PaginationService<Customer>(customers);
-
-            const paginatedData = paginationService.paginate({
-                page: parseInt(page as string) || 1,
-                perPage: parseInt(perPage as string) || 10,
-                controllerName: 'customers',
-            });
-
-            res.json(paginatedData);
-        });
+        router.get('/', this.customerController.getAllCustomers.bind(this.customerController));
     }
 }
