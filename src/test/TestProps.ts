@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 export class TestProps {
 
     public mockResponse(...overrides): any {

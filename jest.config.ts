@@ -6,12 +6,13 @@
 import type {Config} from 'jest';
 
 const config: Config = {
+  roots: ['<rootDir>/src'],
+  globalSetup: "<rootDir>/src/test/GlobalSetup.ts",
   testEnvironment: "node",
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: "coverage",
   testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)",
     "**/test/**/*.[jt]s?(x)",
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],

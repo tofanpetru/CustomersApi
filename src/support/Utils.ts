@@ -27,6 +27,10 @@ export class Utils {
     public throwException() {
         throw new Error("This error is thrown")
     }
+
+    public forwardError(msg: string, callback: any) {
+        callback(msg);
+    }
 }
 
 export const utils = new Utils();
