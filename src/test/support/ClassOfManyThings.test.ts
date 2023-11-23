@@ -30,6 +30,31 @@ describe('Test Examples: Mock functions', () => {
     })
 })
 
+describe('Exercise: Testing async code',  () => {
+
+    test('Exercise 1: Test the returning promise(1)', () => {
+        const msg = "To be a good tester";
+        const inst = new ClassOfManyThings(new Utils());
+
+        inst.promiseMeThis(msg)
+    })
+
+    test('Exercise 2: Fix the asynchronous test(2)', () => {
+        const msg = "To be a good tester";
+        const inst = new ClassOfManyThings(new Utils());
+
+        const result = inst.promiseMeThis(msg);
+        expect(result).toBe(msg);
+    })
+
+    test('Exercise 3: Test the resolved value(3)', async () => {
+        const msg = "To be a good tester";
+        const inst = new ClassOfManyThings(new Utils());
+
+        await inst.promiseMeThis(msg)
+    })
+})
+
 describe.skip('Exercise: Mocked functions',() => {
 
     test('Mock callback function',() => {

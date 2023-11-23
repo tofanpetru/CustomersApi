@@ -1,4 +1,4 @@
-import { Utils } from "./Utils";
+import {Utils} from "./Utils";
 
 export class ClassOfManyThings {
 
@@ -28,5 +28,11 @@ export class ClassOfManyThings {
 
     public logToConsole(msg) {
         console.log(msg)
+    }
+
+    public async promiseMeThis(msg: string) {
+        return new Promise((resolve, reject) => {
+            resolve(msg);
+        });
     }
 }
