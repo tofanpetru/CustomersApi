@@ -1,0 +1,68 @@
+/* styles.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+}
+
+.button-row {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.button-red {
+    background-color: #FF5733;
+    color: white;
+    margin-right: 50px;
+}
+
+.button-green {
+    background-color: #08811f;
+    color: white;
+    margin-right: 50px;
+}
+
+.button-blue {
+    background-color: #3366FF;
+    color: white;
+    margin-right: 50px;
+}
+
+.button-yellow {
+    background-color: #ff9c33;
+    color: white;
+    margin-right: 50px;
+}
+
+.input-row {
+    display: flex;
+    /*justify-content: space-between;*/
+    margin-bottom: 50px;
+}
+
+.input-container {
+    position: relative;
+}
+
+input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    width: 100%;
+    margin-right: 50px;
+}
+
+.error-message {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+    color: #FF0000;
+}
+
+#output-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 100px;
+}

@@ -1,0 +1,41 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Buttons and Input Fields</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="button-row">
+    <button class="button-green" id="getButton">Get</button>
+    <button class="button-red" id="deleteButton">Delete</button>
+    <button class="button-blue" id="createButton">Create</button>
+    <button class="button-yellow" id="updateButton">Update</button>
+</div>
+
+<div class="input-row">
+    <div class="input-container">
+        <input type="text" id="input1" placeholder="ID" style="width: 100px;">
+        <div class="error-message" id="error1"></div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="input2" placeholder="Name" style="width: 100px;">
+        <div class="error-message" id="error2"></div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="input3" placeholder="E-mail" style="width: 100px;">
+        <div class="error-message" id="error3"></div>
+    </div>
+</div>
+<div id="output-container">
+    <!-- В этот контейнер будет выводиться информация -->
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
