@@ -58,7 +58,7 @@ describe('CustomerController', () => {
     describe('Exercise: getByID', () => {
 
         /**
-         * 1 . Investigate failure and propose a resolution
+         * 1 . Investigate test failure and fix as per asserted behavior
          */
 
         test.skip('Should fetch customer by Id and respond with status code 200', async () => {
