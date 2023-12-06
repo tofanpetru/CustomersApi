@@ -1,6 +1,6 @@
 export class Utils {
 
-    private text = "text";
+    private localVar: string | undefined | null;
 
     public sum(a: number, b: number) {
         return a + b;
@@ -14,6 +14,20 @@ export class Utils {
         const obj = {datetime: ''}
         obj.datetime = Date.now().toString();
         return obj;
+    }
+
+    public setLocalVar(value: string | undefined | null) {
+        this.localVar = value;
+    }
+
+    public getLocalVar(): string | undefined | null {
+        if (this.localVar === null) {
+            return null;
+        } else if (this.localVar === undefined) {
+            return undefined;
+        } else {
+            return this.localVar
+        }
     }
 
     public returnBoolean(v: boolean) {
