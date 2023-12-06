@@ -3,7 +3,6 @@ import {HttpStatus} from "../../../domain/enums/httpStatus";
 import {Request, Response} from "express";
 import {ICustomerRepository} from "../../../repository/repository/interfaces/ICustomerRepository";
 import {PaginationService} from "../../../application/services/PaginationService";
-import * as utils from "../../../support/ClassOfManyThings"
 
 export class CustomerController {
 
@@ -13,9 +12,6 @@ export class CustomerController {
         try {
             const newCustomer: Customer = req.body;
             const addedCustomer = await this.customerRepository.createCustomer(newCustomer);
-
-            //TODO: Add test to mock this call
-            utils.logToConsole(addedCustomer);
 
             res.status(HttpStatus.CREATED).json(addedCustomer);
         } catch (error: any) {
