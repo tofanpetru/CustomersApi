@@ -33,6 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {});
      document.getElementById('createButton').addEventListener('click', () => handleButtonClick('createButton'));
      document.getElementById('updateButton').addEventListener('click', () => handleButtonClick('updateButton'));
 </details>
+<details>
+  <summary>Switch syntax</summary>
+
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
+</details>
 
 <h1>Working with input:</h1>
 
@@ -66,7 +71,22 @@ function sendRequest(url, outputContainer) {
             .catch(error => handleRequestError(error, outputContainer));
     }
 </details>
+<details>
+<summary>Fetching logic in internet</summary>
+
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+https://www.geeksforgeeks.org/javascript-fetch-method/
+</details>
+<details>
+<summary>small Tip while we send parameters in url</summary>
+Example: `/v1/customers/${encodeURIComponent(input1Value)}`
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+</details>
+
 <h1>Processing responses:</h1>
+
+
 
 - [ ] Understanding of handling successful and error responses in the handleRequestSuccess and handleRequestError functions.
 - [ ] Send requests to the server and check the processing of responses.
@@ -111,6 +131,18 @@ function sendRequest(url, outputContainer) {
 
 - [ ] Learn handleInputError and understand how input errors are handled.
 - [ ] Check validation by entering incorrect data.
+
+<details>
+<summary>Tips</summary>
+function handleInputError(input, errorElement) {
+        if (input.value.trim() === '') {
+            errorElement.innerText = `${input.placeholder} cannot be empty`;
+        } else {
+            errorElement.innerText = '';
+        }
+    }
+</details>
+
  <h1> User Interface Improvements: </h1>
 
 
